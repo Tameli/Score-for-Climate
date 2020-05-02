@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Score#for#Climate</string>
+    <string name="textViewWelcome">Welcome</string>
+    <string name="buttonScore">Score some points</string>
+    <string name="buttonSetPreconfig">Preconfig</string>
+    <string name="textViewCurrentScore">Your current score is ...</string>
+    <string name="scorepointsTitle">Hier kannst du Punkte erzielen</string>
 </resources>

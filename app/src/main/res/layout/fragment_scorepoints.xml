@@ -65,10 +65,7 @@
                 android:text="10+"
                 android:textSize="24sp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
@@ -76,15 +73,30 @@
                     android:layout_weight="1"
                     android:text="An Cleanup teilgenommen"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/requestData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-                    android:text="CleanUps"
+                    android:text="Verfügbare Termine laden"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/showCities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                    android:text="Alle Städte"
                     android:layout_weight="1"/>
 
             </LinearLayout>
 
+            <!--
             <ListView
                 android:id="@+id/listViewCleanUp"
                 android:layout_width="match_parent"
@@ -124,10 +136,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="and some more text"/>
+-->
+
+            <TextView
+                android:id="@+id/showCleanUpInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
 
 
 
         </LinearLayout>
+
+
 
     </ScrollView>
 

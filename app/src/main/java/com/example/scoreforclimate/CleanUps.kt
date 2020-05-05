@@ -1,6 +1,6 @@
 package com.example.scoreforclimate
 
-class CleanUps (
-    val city: String,
+data class CleanUps (
+    val name: String,
     val code: String
 )

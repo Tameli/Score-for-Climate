@@ -11,5 +11,5 @@ interface CleanUpsAPI {
     fun getAllCleanUps(): Call<List<CleanUps>>
 
     @GET("{code}.json")
-    fun getCleanUpInfo(@Path("code")code : String): Call<CleanUpInfo>
+    fun getCleanUpInfo(@Path("code")code : String): Call<List<CleanUpInfo>>
 }

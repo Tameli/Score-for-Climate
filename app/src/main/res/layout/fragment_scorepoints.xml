@@ -32,11 +32,13 @@
                 android:textSize="24sp"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id = "@+id/firstButtonValue2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Einkaufen mit eigener Einkaufstasche"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id = "@+id/secondButtonValue2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Some Text"/>
@@ -155,6 +157,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id ="@+id/saveScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPEICHERN"

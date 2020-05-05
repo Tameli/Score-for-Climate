@@ -13,7 +13,7 @@ import java.net.HttpURLConnection
 
 class CleanUpsViewModel : ViewModel() {
     val cities: MutableLiveData<List<CleanUps>> = MutableLiveData()
-    val cleanUpInfo: MutableLiveData<CleanUpInfo?> = MutableLiveData()
+    val cleanUpInfo: MutableLiveData<List<CleanUpInfo>> = MutableLiveData()
 
     private val retrofit = Retrofit.Builder()
         .client(OkHttpClient().newBuilder().build())
@@ -42,14 +42,14 @@ class CleanUpsViewModel : ViewModel() {
     fun requestCleanUpInfo(code:String){
         System.out.println(code)
         val call = cleanUpServices.getCleanUpInfo(code)
-        call.enqueue(object : Callback<CleanUpInfo> {
+        call.enqueue(object : Callback<List<CleanUpInfo>> {
 
-            override fun onResponse(call: Call<CleanUpInfo>, response: Response<CleanUpInfo>) {
+            override fun onResponse(call: Call<List<CleanUpInfo>>, response: Response<List<CleanUpInfo>>) {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     cleanUpInfo.value = response.body()
                 }
             }
-            override fun onFailure(call: Call<CleanUpInfo>, t: Throwable){
+            override fun onFailure(call: Call<List<CleanUpInfo>>, t: Throwable){
                 Log.e("Fehler","siehe ", t)
                 System.out.println("Fehler ServerRequest")
             }

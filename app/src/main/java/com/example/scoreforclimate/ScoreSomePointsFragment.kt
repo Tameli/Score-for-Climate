@@ -5,14 +5,25 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_scorepoints.*
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.fragment_scorepoints.*
+import androidx.lifecycle.observe
+import com.example.scoreforclimate.roomDB.Score
+import com.example.scoreforclimate.roomDB.ScoreDatabase
+import java.sql.Timestamp
+import java.util.*
+
 
 class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
+
+    private val cleanUpViewModel: CleanUpsViewModel by activityViewModels()
+    private val scoresDb by lazy {
+        ScoreDatabase.getScoreDatabase(requireContext().applicationContext)
+    }
 
     companion object {
         fun newInstance(): ScoreSomePointsFragment {
@@ -26,8 +37,6 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         setUpViewModelObservers()
     }
 
-    private val cleanUpViewModel: CleanUpsViewModel by activityViewModels()
-
 
     fun setUpButtons(){
         requestData.setOnClickListener(){
@@ -37,8 +46,13 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         showCities.setOnClickListener(){
          showAllCitites().show()
         }
+        saveScore.setOnClickListener {
+            onClickSaveScore()
+        }
     }
-    //REST-API
+
+    //REST-API --------------------------------------------------------------------------------------------------------------------
+
 
     fun showAllCitites(): Dialog {
         val builder = AlertDialog.Builder(context)
@@ -46,7 +60,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
             builder.setTitle("Welche Städte?")
             val cleanUps = cleanUpViewModel.cities.value
             if (cleanUps != null) {
-                val items: Array<String> = cleanUps.map { cityCode -> cityCode.code }.toTypedArray()
+                val items: Array<String> = cleanUps.map { cityCode -> cityCode.name }.toTypedArray()
                 builder.setItems(items) { _, cleanUpWahl -> //der zweite Parameter zeigt an, auf was man klicken kann
                     cleanUpViewModel.requestCleanUpInfo(cleanUps[cleanUpWahl].code)
                 }
@@ -58,17 +72,41 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         return builder.create()
     }
 
-    @SuppressLint("SetTextI18n")
+    //TO DO: Liste auslesen und in TextView oder ListView einfügen
     private fun setUpViewModelObservers(){
 
-        cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer { cleanUpInfo ->
-            showCleanUpInfo.text = cleanUpInfo?.title ?: ""
-            if(cleanUpInfo != null){
-                showCleanUpInfo.text = cleanUpInfo.title + ", Datum: " + ", Uhrzeit: "  +", Meetingpoint: "
-            }else {
+        cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
+            //showCleanUpInfo.text = cleanUpInfo.title ?: ""
+            if (cleanUpInfo != null) {
+                showCleanUpInfo.text = ""
+            } else {
                 showCleanUpInfo.text = ""
             }
         })
+
+    }
+
+    //Room ----------------------------------------------------------------------------------------------
+
+
+    //TO DO: For Loop für 5 und 10 Punkte Checkboxen
+    fun onClickSaveScore(){
+        var newScore : Int = 0
+        val firstButtonValue2 = view?.findViewById<CheckBox>(R.id.firstButtonValue2)
+        val secondButtonValue2 = view?.findViewById<CheckBox>(R.id.secondButtonValue2)
+        val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
+
+        for(x in 0 ..checkBox2.size){
+            if(checkBox2[x]?.isChecked!!){
+                newScore =+2
+            }
+        }
+        val score = Score()
+        score.value = newScore
+        score.timestamp = Timestamp(System.currentTimeMillis())
+        scoresDb.scoreDao().insertScore(score)
+        parentFragmentManager.popBackStack()
+
 
     }
 

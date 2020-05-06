@@ -164,21 +164,19 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     //TO DO: For Loop für 5 und 10 Punkte Checkboxen
     fun onClickSaveScore(){
         var newScore : Int = 0
-//        val firstButtonValue2 = view?.findViewById<CheckBox>(R.id.firstButtonValue2)  //<- überflüssig zugriff auf xml-item direkt möglich
-//        val secondButtonValue2 = view?.findViewById<CheckBox>(R.id.secondButtonValue2)
         val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
 
-        for(x in 0 ..checkBox2.size){
+        for(x in 0 ..(checkBox2.size-1)){
             if(checkBox2[x]?.isChecked!!){
                 newScore =+2
             }
         }
         val score = Score()
+
         score.value = newScore
-        score.timestamp = Timestamp(System.currentTimeMillis())
+        //score.timestamp = Timestamp(System.currentTimeMillis())
         scoresDb.scoreDao().insertScore(score)
         parentFragmentManager.popBackStack()
-
 
     }
 

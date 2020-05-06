@@ -11,5 +11,5 @@ class Score {
     var id: Long = 0
     @ColumnInfo(index = true)
     var value: Int? = null
-    var timestamp: Timestamp? = null
+    //var timestamp: Timestamp? = null
 }

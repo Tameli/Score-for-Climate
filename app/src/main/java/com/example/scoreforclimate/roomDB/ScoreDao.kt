@@ -11,4 +11,7 @@ interface ScoreDao {
 
     @Query("SELECT * FROM scores WHERE id = :id")
     fun getScoreById(id: Long): Score
+
+    @Query("SELECT * FROM scores")
+    fun loadAllNotes(): Array<Score>
 }

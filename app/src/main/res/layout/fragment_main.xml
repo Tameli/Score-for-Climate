@@ -29,6 +29,15 @@
             android:text="@string/textViewCurrentScore"
             android:textSize="24sp"/>
 
+        <Button
+            android:id="@+id/buttonLoadScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="load current score" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonScorePoints"
             android:layout_width="wrap_content"

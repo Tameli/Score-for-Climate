@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -34,7 +35,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     implementation 'androidx.room:room-runtime:2.2.5' // Room
-    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
 
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

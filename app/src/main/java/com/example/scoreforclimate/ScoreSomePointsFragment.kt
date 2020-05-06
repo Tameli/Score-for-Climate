@@ -3,12 +3,15 @@ package com.example.scoreforclimate
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
+import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_scorepoints.*
 import androidx.lifecycle.observe
@@ -20,10 +23,11 @@ import java.util.*
 
 class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
-    private val cleanUpViewModel: CleanUpsViewModel by activityViewModels()
+    private val cleanUpViewModel: CleanUpsViewModel by viewModels()
     private val scoresDb by lazy {
         ScoreDatabase.getScoreDatabase(requireContext().applicationContext)
     }
+
 
     companion object {
         fun newInstance(): ScoreSomePointsFragment {
@@ -35,6 +39,13 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtons()
         setUpViewModelObservers()
+        requireActivity().startService(Intent(context, CurrentPointService::class.java))
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().stopService(Intent(context, CurrentPointService::class.java))
     }
 
 
@@ -74,11 +85,12 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
     //TO DO: Liste auslesen und in TextView oder ListView einfügen
     private fun setUpViewModelObservers(){
-
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
-            //showCleanUpInfo.text = cleanUpInfo.title ?: ""
+//            showCleanUpInfo.text = cleanUpInfo?.title ?: ""
             if (cleanUpInfo != null) {
-                showCleanUpInfo.text = ""
+                for (element in cleanUpInfo) {
+                    showCleanUpInfo.text = element.title
+                }
             } else {
                 showCleanUpInfo.text = ""
             }
@@ -92,8 +104,8 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     //TO DO: For Loop für 5 und 10 Punkte Checkboxen
     fun onClickSaveScore(){
         var newScore : Int = 0
-        val firstButtonValue2 = view?.findViewById<CheckBox>(R.id.firstButtonValue2)
-        val secondButtonValue2 = view?.findViewById<CheckBox>(R.id.secondButtonValue2)
+//        val firstButtonValue2 = view?.findViewById<CheckBox>(R.id.firstButtonValue2)  //<- überflüssig zugriff auf xml-item direkt möglich
+//        val secondButtonValue2 = view?.findViewById<CheckBox>(R.id.secondButtonValue2)
         val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
 
         for(x in 0 ..checkBox2.size){

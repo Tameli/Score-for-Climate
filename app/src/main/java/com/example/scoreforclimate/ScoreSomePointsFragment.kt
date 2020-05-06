@@ -9,9 +9,11 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_scorepoints.*
 import androidx.lifecycle.observe
@@ -86,15 +88,73 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     //TO DO: Liste auslesen und in TextView oder ListView einfügen
     private fun setUpViewModelObservers(){
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
-//            showCleanUpInfo.text = cleanUpInfo?.title ?: ""
-            if (cleanUpInfo != null) {
-                for (element in cleanUpInfo) {
-                    showCleanUpInfo.text = element.title
+            System.out.println(cleanUpInfo.size)
+            when(cleanUpInfo.size){
+                null -> setInvisible(4)
+                1 -> { setInvisible(3)
+                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
                 }
-            } else {
-                showCleanUpInfo.text = ""
+                2 -> { setInvisible(2)
+                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
+                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
+                }
+                3 ->{ setInvisible(1)
+                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
+                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
+                    thirdCleanup.text = getCleanupInfoAsString(2, cleanUpInfo)
+                }
+                4 -> {
+                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
+                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
+                    thirdCleanup.text = getCleanupInfoAsString(2, cleanUpInfo)
+                    forthCleanup.text = getCleanupInfoAsString(3, cleanUpInfo)
+                }
+
             }
         })
+
+    }
+
+    private fun getCleanupInfoAsString (i: Int, cleanUpInfo: List<CleanUpInfo>) : String {
+        return cleanUpInfo[i].title +"\n Datum: "+ cleanUpInfo[i].date+"\n Zeit: "+ cleanUpInfo[i].time +"\n Treffpunkt: "+ cleanUpInfo[i].meetingpoint
+    }
+
+    private fun setInvisible(i: Int){
+        when(i){
+            1 -> { forthCleanup.text = ""
+                forthCleanup.setVisibility(View.GONE)
+                firstCleanup.setVisibility(View.VISIBLE)
+                secondCleanup.setVisibility(View.VISIBLE)
+                thirdCleanup.setVisibility(View.VISIBLE)
+            }
+            2 -> { thirdCleanup.text = ""
+                forthCleanup.text=""
+                forthCleanup.setVisibility(View.GONE)
+                thirdCleanup.setVisibility(View.GONE)
+                firstCleanup.setVisibility(View.VISIBLE)
+                secondCleanup.setVisibility(View.VISIBLE)
+            }
+            3 -> {
+                secondCleanup.text = ""
+                thirdCleanup.text = ""
+                forthCleanup.text=""
+                secondCleanup.setVisibility(View.GONE)
+                forthCleanup.setVisibility(View.GONE)
+                thirdCleanup.setVisibility(View.GONE)
+                firstCleanup.setVisibility(View.VISIBLE)
+            }
+            4 -> {
+                firstCleanup.text = ""
+                secondCleanup.text = ""
+                thirdCleanup.text = ""
+                forthCleanup.text = ""
+                firstCleanup.setVisibility(View.GONE)
+                secondCleanup.setVisibility(View.GONE)
+                forthCleanup.setVisibility(View.GONE)
+                thirdCleanup.setVisibility(View.GONE)
+            }
+        }
+
 
     }
 
@@ -124,3 +184,5 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
 
 }
+
+

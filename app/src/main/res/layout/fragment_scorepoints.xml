@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="2+"
+                android:text="2 Punkte"
                 android:textSize="24sp"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="5+"
+                android:text="5 Punkte"
                 android:textSize="24sp"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="10+"
+                android:text="10 Punkte"
                 android:textSize="24sp"/>
 
 
@@ -98,54 +98,56 @@
 
             </LinearLayout>
 
-            <!--
-            <ListView
-                android:id="@+id/listViewCleanUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and some more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and some more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and some more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and more text"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="and some more text"/>
--->
-
             <TextView
                 android:id="@+id/showCleanUpInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
+
+            <!--
+            <ListView
+                android:id="@+id/listViewCleanUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+-->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and some more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and some more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and some more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and more text"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and some more text"/>
+
+
+
 
 
 

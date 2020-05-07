@@ -1,26 +1,22 @@
 package com.example.scoreforclimate
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.CheckBox
-import android.widget.ListView
+import android.widget.ScrollView
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.fragment_scorepoints.*
-import androidx.lifecycle.observe
 import com.example.scoreforclimate.roomDB.Score
 import com.example.scoreforclimate.roomDB.ScoreDatabase
-import java.sql.Timestamp
-import java.util.*
+import com.google.android.material.checkbox.MaterialCheckBox
+import kotlinx.android.synthetic.main.fragment_scorepoints.*
 
 
 class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
@@ -40,7 +36,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtons()
-        setUpViewModelObservers()
+        setUpViewModelOberserver()
         requireActivity().startService(Intent(context, CurrentPointService::class.java))
 
     }
@@ -85,79 +81,41 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         return builder.create()
     }
 
-    //TO DO: Liste auslesen und in TextView oder ListView einfügen
-    private fun setUpViewModelObservers(){
+    private fun setUpViewModelOberserver(){
+
+        var coordinatorLayout = view?.findViewById(R.id.scorePoints) as CoordinatorLayout
+        var counter: Int = 0
+        val allCheckboxes = arrayListOf<CheckBox>()
+
+
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
-            System.out.println(cleanUpInfo.size)
-            when(cleanUpInfo.size){
-                null -> setInvisible(4)
-                1 -> { setInvisible(3)
-                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
-                }
-                2 -> { setInvisible(2)
-                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
-                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
-                }
-                3 ->{ setInvisible(1)
-                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
-                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
-                    thirdCleanup.text = getCleanupInfoAsString(2, cleanUpInfo)
-                }
-                4 -> {
-                    firstCleanup.text = getCleanupInfoAsString(0, cleanUpInfo)
-                    secondCleanup.text = getCleanupInfoAsString(1, cleanUpInfo)
-                    thirdCleanup.text = getCleanupInfoAsString(2, cleanUpInfo)
-                    forthCleanup.text = getCleanupInfoAsString(3, cleanUpInfo)
-                }
-
-            }
-        })
-
-    }
-
-    private fun getCleanupInfoAsString (i: Int, cleanUpInfo: List<CleanUpInfo>) : String {
-        return cleanUpInfo[i].title +"\n Datum: "+ cleanUpInfo[i].date+"\n Zeit: "+ cleanUpInfo[i].time +"\n Treffpunkt: "+ cleanUpInfo[i].meetingpoint
-    }
-
-    private fun setInvisible(i: Int){
-        when(i){
-            1 -> { forthCleanup.text = ""
-                forthCleanup.setVisibility(View.GONE)
-                firstCleanup.setVisibility(View.VISIBLE)
-                secondCleanup.setVisibility(View.VISIBLE)
-                thirdCleanup.setVisibility(View.VISIBLE)
-            }
-            2 -> { thirdCleanup.text = ""
-                forthCleanup.text=""
-                forthCleanup.setVisibility(View.GONE)
-                thirdCleanup.setVisibility(View.GONE)
-                firstCleanup.setVisibility(View.VISIBLE)
-                secondCleanup.setVisibility(View.VISIBLE)
-            }
-            3 -> {
-                secondCleanup.text = ""
-                thirdCleanup.text = ""
-                forthCleanup.text=""
-                secondCleanup.setVisibility(View.GONE)
-                forthCleanup.setVisibility(View.GONE)
-                thirdCleanup.setVisibility(View.GONE)
-                firstCleanup.setVisibility(View.VISIBLE)
-            }
-            4 -> {
-                firstCleanup.text = ""
-                secondCleanup.text = ""
-                thirdCleanup.text = ""
-                forthCleanup.text = ""
-                firstCleanup.setVisibility(View.GONE)
-                secondCleanup.setVisibility(View.GONE)
-                forthCleanup.setVisibility(View.GONE)
-                thirdCleanup.setVisibility(View.GONE)
-            }
+            System.out.println("Vorher " +allCheckboxes.size)
+        for(i: Int in 0 until allCheckboxes.size){
+            coordinatorLayout.removeView(allCheckboxes[i])
         }
-
+            allCheckboxes.clear()
+            var yCoordinate : Int = 0
+        for (i in 0 until cleanUpInfo.size) {
+            val sv = ScrollView(context)
+            //sv.layoutParams =
+                //CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT)
+            val checkParams: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
+                CoordinatorLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT
+            )
+            checkParams.setMargins(40, 1100+yCoordinate, 100, 5)
+            checkParams.gravity = Gravity.CENTER
+            checkParams.height= 400
+            val checkBox = MaterialCheckBox(context)
+            checkBox.setText(cleanUpInfo[i].title +"\n Datum: "+ cleanUpInfo[i].date +"Zeit: "+ cleanUpInfo[i].time +"\n Treffpunkt: "+ cleanUpInfo[i].meetingpoint)
+            allCheckboxes.add(checkBox)
+            System.out.println(allCheckboxes.size)
+            coordinatorLayout.addView(checkBox, checkParams)
+            //coordinatorLayout.addView(sv)
+            yCoordinate =+400
+        }
+    })
 
     }
-
     //Room ----------------------------------------------------------------------------------------------
 
 

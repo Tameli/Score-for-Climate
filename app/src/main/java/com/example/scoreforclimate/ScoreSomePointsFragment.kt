@@ -3,12 +3,15 @@ package com.example.scoreforclimate
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +20,8 @@ import com.example.scoreforclimate.roomDB.Score
 import com.example.scoreforclimate.roomDB.ScoreDatabase
 import com.google.android.material.checkbox.MaterialCheckBox
 import kotlinx.android.synthetic.main.fragment_scorepoints.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
@@ -33,6 +38,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtons()
@@ -81,12 +87,14 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         return builder.create()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpViewModelOberserver(){
 
         var coordinatorLayout = view?.findViewById(R.id.scorePoints) as CoordinatorLayout
         var counter: Int = 0
         val allCheckboxes = arrayListOf<CheckBox>()
-
+        //val sv = ScrollView(context)
+        //sv.layoutParams = CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT)
 
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
             System.out.println("Vorher " +allCheckboxes.size)
@@ -96,22 +104,28 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
             allCheckboxes.clear()
             var yCoordinate : Int = 0
         for (i in 0 until cleanUpInfo.size) {
-            val sv = ScrollView(context)
-            //sv.layoutParams =
-                //CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT)
+
             val checkParams: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT
             )
-            checkParams.setMargins(40, 1100+yCoordinate, 100, 5)
+            checkParams.setMargins(40, 1200+yCoordinate, 100, 5)
             checkParams.gravity = Gravity.CENTER
             checkParams.height= 400
             val checkBox = MaterialCheckBox(context)
-            checkBox.setText(cleanUpInfo[i].title +"\n Datum: "+ cleanUpInfo[i].date +"Zeit: "+ cleanUpInfo[i].time +"\n Treffpunkt: "+ cleanUpInfo[i].meetingpoint)
-            allCheckboxes.add(checkBox)
-            System.out.println(allCheckboxes.size)
-            coordinatorLayout.addView(checkBox, checkParams)
-            //coordinatorLayout.addView(sv)
-            yCoordinate =+400
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyy")
+            val date = LocalDate.parse(cleanUpInfo[i].date, formatter)
+            if(date > LocalDate.now()) {
+                checkBox.setText(cleanUpInfo[i].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[i].time + "\n Treffpunkt: " + cleanUpInfo[i].meetingpoint)
+                allCheckboxes.add(checkBox)
+                System.out.println(allCheckboxes.size)
+                coordinatorLayout.addView(checkBox, checkParams)
+                yCoordinate = +400
+                if(coordinatorLayout.parent != null){
+                    //((ViewGroup)coordinatorLayout.getParent()).removeView(coordinatorLayout)
+                }
+                //sv.removeView(coordinatorLayout)
+                //sv.addView(coordinatorLayout)
+            }
         }
     })
 
@@ -140,5 +154,6 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
 
 }
+
 
 

@@ -5,9 +5,9 @@
     android:id="@+id/scorePoints"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"> -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -148,7 +148,7 @@
 
 
 
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id ="@+id/saveScore"

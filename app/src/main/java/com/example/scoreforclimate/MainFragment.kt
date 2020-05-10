@@ -23,7 +23,8 @@ class MainFragment : Fragment(R.layout.fragment_main){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonScorePoints.setOnClickListener { scoreSomePoints() }
-        buttonLoadScore.setOnClickListener(){getScoreFromDB()}
+        buttonLoadScore.setOnClickListener { getScoreFromDB()}
+        buttonSetPreconfig.setOnClickListener { openPreferences() }
     }
 
     private fun scoreSomePoints() {
@@ -39,5 +40,10 @@ class MainFragment : Fragment(R.layout.fragment_main){
             textViewCurrentScore.text = "You current score is" +" "+ score.value
         }
 
+    }
+
+    private fun openPreferences() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_host, ScorePreferenceFragment.newInstance()).addToBackStack("pref").commit()
     }
 }

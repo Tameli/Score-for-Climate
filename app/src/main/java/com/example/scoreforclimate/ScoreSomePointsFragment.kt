@@ -5,11 +5,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.ScrollView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,7 +32,8 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
     companion object {
         fun newInstance(): ScoreSomePointsFragment {
-            return ScoreSomePointsFragment()
+            val fragment = ScoreSomePointsFragment()
+            return fragment
         }
     }
 
@@ -42,23 +41,15 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtons()
-        setUpViewModelOberserver()
-        requireActivity().startService(Intent(context, CurrentPointService::class.java))
-
+        setUpViewModelObserver()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().stopService(Intent(context, CurrentPointService::class.java))
-    }
-
-
-    fun setUpButtons(){
-        requestData.setOnClickListener(){
+    private fun setUpButtons(){
+        requestData.setOnClickListener{
             cleanUpViewModel.requestAllCleanUps()
             Toast.makeText(context, "Termine wurden geladen", Toast.LENGTH_LONG).show()
         }
-        showCities.setOnClickListener(){
+        showCities.setOnClickListener{
          showAllCitites().show()
         }
         saveScore.setOnClickListener {
@@ -69,7 +60,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     //REST-API --------------------------------------------------------------------------------------------------------------------
 
 
-    fun showAllCitites(): Dialog {
+    private fun showAllCitites(): Dialog {
         val builder = AlertDialog.Builder(context)
         if (cleanUpViewModel.cities.value != null) {
             builder.setTitle("Welche Städte?")
@@ -88,43 +79,30 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setUpViewModelOberserver(){
-
-        var coordinatorLayout = view?.findViewById(R.id.scorePoints) as CoordinatorLayout
-        var counter: Int = 0
-        val allCheckboxes = arrayListOf<CheckBox>()
-        //val sv = ScrollView(context)
-        //sv.layoutParams = CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT)
+    private fun setUpViewModelObserver(){
+        val coordinatorLayout = view?.findViewById(R.id.linearLayoutFragmentScorepoints) as LinearLayout
+        val allCheckboxes: ArrayList<CheckBox> = arrayListOf()
 
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
-            System.out.println("Vorher " +allCheckboxes.size)
+            println("Vorher " +allCheckboxes.size)
         for(i: Int in 0 until allCheckboxes.size){
             coordinatorLayout.removeView(allCheckboxes[i])
         }
-            allCheckboxes.clear()
-            var yCoordinate : Int = 0
-        for (i in 0 until cleanUpInfo.size) {
+        allCheckboxes.clear()
+        for (i in cleanUpInfo.indices) {
 
             val checkParams: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT
             )
-            checkParams.setMargins(40, 1200+yCoordinate, 100, 5)
-            checkParams.gravity = Gravity.CENTER
-            checkParams.height= 400
+            checkParams.setMargins(0, 25 , 0, 0)
             val checkBox = MaterialCheckBox(context)
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyy")
             val date = LocalDate.parse(cleanUpInfo[i].date, formatter)
             if(date > LocalDate.now()) {
-                checkBox.setText(cleanUpInfo[i].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[i].time + "\n Treffpunkt: " + cleanUpInfo[i].meetingpoint)
+                checkBox.text = cleanUpInfo[i].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[i].time + "\n Treffpunkt: " + cleanUpInfo[i].meetingpoint
                 allCheckboxes.add(checkBox)
-                System.out.println(allCheckboxes.size)
+                println(allCheckboxes.size)
                 coordinatorLayout.addView(checkBox, checkParams)
-                yCoordinate = +400
-                if(coordinatorLayout.parent != null){
-                    //((ViewGroup)coordinatorLayout.getParent()).removeView(coordinatorLayout)
-                }
-                //sv.removeView(coordinatorLayout)
-                //sv.addView(coordinatorLayout)
             }
         }
     })
@@ -134,12 +112,12 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
 
     //TO DO: For Loop für 5 und 10 Punkte Checkboxen
-    fun onClickSaveScore(){
-        var newScore : Int = 0
+    private fun onClickSaveScore(){
+        var newScore = 0
         val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
 
-        for(x in 0 ..(checkBox2.size-1)){
-            if(checkBox2[x]?.isChecked!!){
+        for(element in checkBox2){
+            if(element?.isChecked!!){
                 newScore =+2
             }
         }

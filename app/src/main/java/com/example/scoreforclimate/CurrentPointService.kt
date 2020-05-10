@@ -43,7 +43,7 @@ class CurrentPointService : Service() {
             .setTicker("Score for Climate")
             .setContentText(pointsString)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setSmallIcon(android.R.drawable.btn_plus)
+            .setSmallIcon(R.drawable.ic_stat_name)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
             .setWhen(System.currentTimeMillis())
             .setCategory(Notification.CATEGORY_SERVICE)

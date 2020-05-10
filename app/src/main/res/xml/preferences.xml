@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:textSize="30sp">
+    <PreferenceCategory
+        android:key="baseScorePrefs"
+        android:textSize="30sp"
+        android:title="Was trennst du bereits?">
 
+        <CheckBoxPreference
+            android:key="checkBoxPreferencePet"
+            android:title="PET"/>
+
+        <CheckBoxPreference
+            android:key="checkBoxPreferenceAlu"
+            android:title="Alu"/>
+
+        <CheckBoxPreference
+            android:key="checkBoxPreferenceCardboard"
+            android:title="Karton"/>
+
+        <CheckBoxPreference
+            android:key="checkBoxPreferenceNothing"
+            android:title="Nichts"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="categoryCompost"
+        android:textSize="30sp"
+        android:title="Hast du einen Kompost?">
+
+        <ListPreference
+            android:key="listPreference"
+            android:title="Auswählen"
+            android:entries="@array/listArray"
+            android:entryValues="@array/listValues"
+
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="categoryFood"
+        android:textSize="30sp"
+        android:title="Wie ernährst du dich?">
+
+        <CheckBoxPreference
+            android:key="checkBoxPreferenceVegetarian"
+            android:title="Vegetraisch"/>
+
+        <CheckBoxPreference
+            android:key="checkBoxPreferenceVegan"
+            android:title="Vegan"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

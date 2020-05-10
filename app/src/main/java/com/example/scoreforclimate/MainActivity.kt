@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val name : CharSequence = "MobPro"
             val description = "MobPro Demo Alerts"
-            val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW)
             channel.description = description
 
             val notificationManager = getSystemService(NotificationManager::class.java)

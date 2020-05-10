@@ -4,28 +4,30 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_scorepoints.*
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     companion object{
-        val CHANNEL_ID = "ch.example.scoreforclimate.channel"
+        const val CHANNEL_ID = "ch.example.scoreforclimate.channel"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createNotificationChannel()
+        startService(Intent(applicationContext, CurrentPointService::class.java))
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_host, MainFragment.newInstance())
                 .commit()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService(Intent(applicationContext, CurrentPointService::class.java))
     }
 
     private fun createNotificationChannel(){
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             channel.description = description
 
             val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
+            notificationManager?.createNotificationChannel(channel)
         }
     }
 

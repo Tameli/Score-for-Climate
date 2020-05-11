@@ -42,13 +42,10 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtons()
         setUpViewModelObserver()
+        cleanUpViewModel.requestAllCleanUps()
     }
 
     private fun setUpButtons(){
-        requestData.setOnClickListener{
-            cleanUpViewModel.requestAllCleanUps()
-            Toast.makeText(context, "Termine wurden geladen", Toast.LENGTH_LONG).show()
-        }
         showCities.setOnClickListener{
          showAllCitites().show()
         }
@@ -126,6 +123,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         score.value = newScore
         //score.timestamp = Timestamp(System.currentTimeMillis())
         scoresDb.scoreDao().insertScore(score)
+        System.out.println("Inserted")
         parentFragmentManager.popBackStack()
 
     }

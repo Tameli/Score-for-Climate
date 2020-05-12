@@ -46,7 +46,7 @@
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceVegetarian"
-            android:title="Vegetraisch"/>
+            android:title="Vegetarisch"/>
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceVegan"

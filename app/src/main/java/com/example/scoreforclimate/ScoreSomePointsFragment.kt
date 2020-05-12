@@ -81,7 +81,6 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         val allCheckboxes: ArrayList<CheckBox> = arrayListOf()
 
         cleanUpViewModel.cleanUpInfo.observe(viewLifecycleOwner, Observer{ cleanUpInfo ->
-            println("Vorher " +allCheckboxes.size)
         for(i: Int in 0 until allCheckboxes.size){
             coordinatorLayout.removeView(allCheckboxes[i])
         }
@@ -98,7 +97,6 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
             if(date > LocalDate.now()) {
                 checkBox.text = cleanUpInfo[i].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[i].time + "\n Treffpunkt: " + cleanUpInfo[i].meetingpoint
                 allCheckboxes.add(checkBox)
-                println(allCheckboxes.size)
                 coordinatorLayout.addView(checkBox, checkParams)
             }
         }
@@ -112,18 +110,26 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     private fun onClickSaveScore(){
         var newScore = 0
         val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
+        val checkBox5: List<CheckBox?> = listOf<CheckBox?>(firstButtonValue5, secondButtonValue5)
 
-        for(element in checkBox2){
-            if(element?.isChecked!!){
-                newScore =+2
+        for(i: Int in 0 until checkBox2.size){
+            if(checkBox2[i]?.isChecked!!){
+                newScore = newScore +2
+            }
+        }
+
+        for(i: Int in 0 until checkBox5.size){
+            if(checkBox5[i]?.isChecked!!){
+                newScore = newScore +5
             }
         }
         val score = Score()
-
         score.value = newScore
-        //score.timestamp = Timestamp(System.currentTimeMillis())
-        scoresDb.scoreDao().insertScore(score)
-        System.out.println("Inserted")
+        if(scoresDb.scoreDao().getScoreById(1).value == 0){
+            scoresDb.scoreDao().insertScore(score)
+        }
+        score.value = newScore + scoresDb.scoreDao().getScoreById(1).value!!
+        scoresDb.scoreDao().updateScore(1,score.value)
         parentFragmentManager.popBackStack()
 
     }

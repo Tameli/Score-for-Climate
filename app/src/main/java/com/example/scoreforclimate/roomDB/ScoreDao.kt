@@ -7,7 +7,10 @@ import androidx.room.Query
 @Dao
 interface ScoreDao {
     @Insert
-    fun insertScore(vararg notes: Score)
+    fun insertScore(vararg scores: Score)
+
+    @Query("UPDATE scores SET value =+:newScore WHERE id = :id")
+    fun updateScore(id: Long, newScore: Int?)
 
     @Query("SELECT * FROM scores WHERE id = :id")
     fun getScoreById(id: Long): Score

@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.example.scoreforclimate.roomDB.ScoreDatabase
 
 class CurrentPointService : Service() {
 

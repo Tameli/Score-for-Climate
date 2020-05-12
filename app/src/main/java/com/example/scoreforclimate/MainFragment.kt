@@ -35,7 +35,7 @@ class MainFragment : Fragment(R.layout.fragment_main){
 
         val scoreDao = scoresDb.scoreDao()
         val score = scoreDao.getScoreById(1)
-        //System.out.println(score.value)
+        System.out.println(score.value)
         if(score.value != null){
             textViewCurrentScore.text = "You current score is" +" "+ score.value
         }

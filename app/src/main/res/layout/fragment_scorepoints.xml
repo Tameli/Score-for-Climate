@@ -52,11 +52,13 @@
                 android:textSize="24sp"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id = "@+id/firstButtonValue5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Some other text"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id = "@+id/secondButtonValue5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Some more text"/>

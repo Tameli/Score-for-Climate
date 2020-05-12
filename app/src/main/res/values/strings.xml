@@ -5,4 +5,18 @@
     <string name="buttonSetPreconfig">Preconfig</string>
     <string name="textViewCurrentScore">Your current score is ...</string>
     <string name="scorepointsTitle">Hier kannst du Punkte erzielen</string>
+    <string name="twopoints">2 Punkte</string>
+    <string name="firstButtonValue2">Einkaufen mit eigener Einkaufstasche</string>
+    <string name="secondButtonValue2">Gemüse ohne Plastikverpackung kaufen</string>
+    <string name="fivepoints">5 Punkte</string>
+    <string name="firstButtonValue5">Ausnahmsweise für einen Tag vegetarisch ernähren</string>
+    <string name="secondButtonValue5">Mit ÖV gereist</string>
+    <string name="tenpoints">10 Punkte</string>
+    <string name="cleanupsubtitle">Ergattere 10 Punkte mit der Teilnahme an einem Clean-up!</string>
+    <string name="selectcitybuttontext">Stadt in deiner Nähe auswählen</string>
+    <string name="firstButtonValue10">Velo: Einkaufen, zur Arbeit,...</string>
+    <string name="secondButtonValue10">Zu Fuss: Einkaufen, zur Arbeit,...</string>
+    <string name="fiftypoints">50 Punkte</string>
+    <string name="firstButtonValue50">Mit Zug reisen anstelle des Flugzeugs</string>
+    <string name="save">SPEICHERN</string>
 </resources>

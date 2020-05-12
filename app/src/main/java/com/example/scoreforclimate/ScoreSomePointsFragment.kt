@@ -2,13 +2,11 @@ package com.example.scoreforclimate
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
@@ -32,8 +30,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
     companion object {
         fun newInstance(): ScoreSomePointsFragment {
-            val fragment = ScoreSomePointsFragment()
-            return fragment
+            return ScoreSomePointsFragment()
         }
     }
 
@@ -112,20 +109,25 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         val  checkBox2 : List<CheckBox?> = listOf<CheckBox?>(firstButtonValue2, secondButtonValue2)
         val checkBox5: List<CheckBox?> = listOf<CheckBox?>(firstButtonValue5, secondButtonValue5)
 
-        for(i: Int in 0 until checkBox2.size){
-            if(checkBox2[i]?.isChecked!!){
-                newScore = newScore +2
+        for(element in checkBox2){
+            if(element?.isChecked!!){
+                newScore += 2
             }
         }
 
-        for(i: Int in 0 until checkBox5.size){
-            if(checkBox5[i]?.isChecked!!){
-                newScore = newScore +5
+        for(element in checkBox5){
+            if(element?.isChecked!!){
+                newScore += 5
             }
         }
         val score = Score()
         score.value = newScore
-        if(scoresDb.scoreDao().getScoreById(1).value == 0){
+        try {
+            if(scoresDb.scoreDao().getScoreById(1).value == null){
+            scoresDb.scoreDao().insertScore(score)
+        }
+
+        } catch (e: NullPointerException) {
             scoresDb.scoreDao().insertScore(score)
         }
         score.value = newScore + scoresDb.scoreDao().getScoreById(1).value!!

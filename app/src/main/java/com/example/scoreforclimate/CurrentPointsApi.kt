@@ -1,6 +1,6 @@
 package com.example.scoreforclimate
 
 interface CurrentPointsApi {
-    fun showPoints():String
+    fun showPoints(currentPoints:Int)
 
 }

@@ -9,12 +9,16 @@ import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.example.scoreforclimate.roomDB.ScoreDatabase
 
 class CurrentPointService : Service() {
 
     private val NOTIFICATION_ID = 23
     private val currentPointsApi = CurrentPointsApiImpl()
     private var notificationManager : NotificationManager? = null
+    private val scoresDb by lazy {
+        ScoreDatabase.getScoreDatabase(applicationContext.applicationContext)
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -32,8 +36,8 @@ class CurrentPointService : Service() {
     }
 
     fun showPoints(currentScore: Int?) {
-        var currentPoints : Int
-        currentPoints = -1
+        var currentPoints : Int?
+        currentPoints = scoresDb.scoreDao().getScoreById(1).value
         if (currentScore != null) {
             currentPoints = currentScore
         }

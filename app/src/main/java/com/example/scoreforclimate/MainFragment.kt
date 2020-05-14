@@ -5,10 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.scoreforclimate.roomDB.History
 import com.example.scoreforclimate.roomDB.ScoreDatabase
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.sql.Date
+import java.text.DateFormat
 
-class MainFragment : Fragment(R.layout.fragment_main){
+class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var currentPointsConnection: CurrentPointsConnection? = null
 
@@ -25,13 +28,15 @@ class MainFragment : Fragment(R.layout.fragment_main){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindService()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonScorePoints.setOnClickListener { scoreSomePoints() }
-        buttonLoadScore.setOnClickListener { setScoreOnDisplay()}
+        buttonLoadHistory.setOnClickListener { getHistoryFromDB() }
         buttonSetPreconfig.setOnClickListener { openPreferences() }
+        setScoreOnDisplay()
     }
 
     override fun onDestroy() {
@@ -57,7 +62,9 @@ class MainFragment : Fragment(R.layout.fragment_main){
     //--------------------button clicks----------------------
 
     private fun scoreSomePoints() {
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_host, ScoreSomePointsFragment.newInstance()).addToBackStack("ScoreSomePoints").commit()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_host, ScoreSomePointsFragment.newInstance())
+            .addToBackStack("ScoreSomePoints").commit()
     }
 
     private fun setScoreOnDisplay() {
@@ -66,12 +73,13 @@ class MainFragment : Fragment(R.layout.fragment_main){
 
     private fun openPreferences() {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_host, ScorePreferenceFragment.newInstance()).addToBackStack("pref").commit()
+            .replace(R.id.fragment_host, ScorePreferenceFragment.newInstance())
+            .addToBackStack("pref").commit()
     }
 
     //-------------------methods-----------------------------
 
-    private fun getScoreFromDB() :Int {
+    private fun getScoreFromDB(): Int {
         var points = -1
         try {
             val scoreDao = scoresDb.scoreDao()
@@ -86,4 +94,15 @@ class MainFragment : Fragment(R.layout.fragment_main){
         }
         return points
     }
+
+    private fun getHistoryFromDB() {
+        val historyDao = scoresDb.historyDao()
+        val history = scoresDb.historyDao().loadAllHistories()
+        val df = DateFormat.getDateInstance()
+        for (i: Int in 0 until history.size - 1) {
+            textHistory.append(df.format(history[i].modificationDate)+":")
+            textHistory.append(history[i].listActions.toString() +"\n \n")
+        }
+    }
+
 }

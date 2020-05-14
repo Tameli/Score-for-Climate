@@ -28,13 +28,23 @@
             android:textSize="24sp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonLoadScore"
+            android:id="@+id/buttonLoadHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="70dp"
             style="?attr/materialButtonOutlinedStyle"
-            android:text="load current score" />
+            android:text="load entire history" />
+
+
+        <TextView
+            android:id="@+id/textHistory"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text=""
+            android:textSize="15sp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonScorePoints"

@@ -23,28 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="200dp"
             android:text="@string/textViewCurrentScore"
             android:textSize="24sp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonLoadHistory"
+            android:id="@+id/buttonShowHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
-            style="?attr/materialButtonOutlinedStyle"
-            android:text="load entire history" />
-
-
-        <TextView
-            android:id="@+id/textHistory"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text=""
-            android:textSize="15sp"/>
+            android:text="Zeige History"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonScorePoints"
@@ -52,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
             app:strokeColor="@color/colorPrimaryDark"
             android:text="@string/buttonScore"/>
 

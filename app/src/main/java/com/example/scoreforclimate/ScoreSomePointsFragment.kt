@@ -98,7 +98,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
                 )
                 checkParams.setMargins(0, 25, 0, 0)
                 val checkBox = MaterialCheckBox(context)
-                checkBox.setId(i)
+                checkBox.id = i
                 val formatter = DateTimeFormatter.ofPattern("dd-MM-yyy")
                 val date = LocalDate.parse(cleanUpInfo[i].date, formatter)
                 if (date > LocalDate.now()) {
@@ -128,7 +128,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         //10 points section
 
         for (i: Int in 0 until range) {
-            val checkBox: CheckBox? = view?.findViewById<CheckBox>(i)
+            val checkBox: CheckBox? = view?.findViewById(i)
             if(checkBox?.isChecked!!){
                 newScore +=10
                 listActions.add(checkBox.text.toString())
@@ -191,15 +191,13 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         val score = Score()
         score.value = newScore
         try{
-            if (scoresDb.scoreDao().getScoreById(1).value == null) {
-                scoresDb.scoreDao().insertScore(score)
+            if (scoresDb.scoreDao().getScoreById(1).value != null) {
+                score.value = newScore + scoresDb.scoreDao().getScoreById(1).value!!
+                scoresDb.scoreDao().updateScore(1, score.value)
             }
         }catch(e: NullPointerException){
             scoresDb.scoreDao().insertScore(score)
         }
-
-        score.value = newScore + scoresDb.scoreDao().getScoreById(1).value!!
-        scoresDb.scoreDao().updateScore(1, score.value)
 
         saveHistory(listActions)
         parentFragmentManager.popBackStack()

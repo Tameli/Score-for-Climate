@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.scoreforclimate.roomDB.History
+import com.example.scoreforclimate.roomDB.HistoryFragment
 import com.example.scoreforclimate.roomDB.ScoreDatabase
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.sql.Date
@@ -34,9 +35,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonScorePoints.setOnClickListener { scoreSomePoints() }
-        buttonLoadHistory.setOnClickListener { getHistoryFromDB() }
         buttonSetPreconfig.setOnClickListener { openPreferences() }
         setScoreOnDisplay()
+        buttonShowHistory.setOnClickListener { getHistoryFragment() }
     }
 
     override fun onDestroy() {
@@ -77,6 +78,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             .addToBackStack("pref").commit()
     }
 
+    private fun getHistoryFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_host, HistoryFragment())
+            .addToBackStack("hist").commit()
+    }
+
     //-------------------methods-----------------------------
 
     private fun getScoreFromDB(): Int {
@@ -93,16 +100,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             points = 0
         }
         return points
-    }
-
-    private fun getHistoryFromDB() {
-        val historyDao = scoresDb.historyDao()
-        val history = scoresDb.historyDao().loadAllHistories()
-        val df = DateFormat.getDateInstance()
-        for (i: Int in 0 until history.size - 1) {
-            textHistory.append(df.format(history[i].modificationDate)+":")
-            textHistory.append(history[i].listActions.toString() +"\n \n")
-        }
     }
 
 }

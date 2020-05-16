@@ -128,20 +128,25 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         //10 points section
 
         for (i: Int in 0 until range) {
+            var onlyTitleCleanUp:String? = null
             val checkBox: CheckBox? = view?.findViewById(i)
             if(checkBox?.isChecked!!){
                 newScore +=10
-                listActions.add(checkBox.text.toString())
+                var splittedText: List<String?> = checkBox.text.toString().split(":")
+                var splittedTextPart0: List<String?> = checkBox.text.toString().split("\n")
+                onlyTitleCleanUp = splittedTextPart0[0]
+                System.out.println(onlyTitleCleanUp)
+                listActions.add(onlyTitleCleanUp)
             }
         }
 
         for (i: Int in 0 until checkBox10.size) {
             if (checkBox10[i]?.isChecked!!) {
                 newScore += 10
-                if (checkBox2[i] == firstButtonValue10) {
+                if (checkBox10[i] == firstButtonValue10) {
                     listActions.add("Velo:Einkaufen, zur Arbeit...")
                 }
-                if (checkBox2[i] == secondButtonValue10) {
+                if (checkBox10[i] == secondButtonValue10) {
                     listActions.add("Zu Fuss:Einkaufen, zur Arbeit...")
                 }
             }

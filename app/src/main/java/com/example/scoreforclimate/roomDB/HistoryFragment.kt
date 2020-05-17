@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scoreforclimate.R
+import kotlinx.android.synthetic.main.fragment_history.*
 import xyz.sangcomz.stickytimelineview.RecyclerSectionItemDecoration
 import xyz.sangcomz.stickytimelineview.TimeLineRecyclerView
 import xyz.sangcomz.stickytimelineview.model.SectionInfo
@@ -26,19 +27,29 @@ class HistoryFragment: Fragment(R.layout.fragment_history) {
 
         history = getHistoryFromDB()
 
-        val recyclerView = view.findViewById<TimeLineRecyclerView>(R.id.recycler_view)
+        if (!history.isEmpty()) {
+            history.reverse()
 
-        recyclerView?.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.VERTICAL,
-            false)
+            val recyclerView = view.findViewById<TimeLineRecyclerView>(R.id.recycler_view)
 
-        //Add RecyclerSectionItemDecoration.SectionCallback
-        recyclerView?.addItemDecoration(getSectionCallback(history))
+            recyclerView.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL,
+                false)
 
-        //Set Adapter
-        recyclerView?.adapter = HistoryPointAdapter(layoutInflater,
-            history,
-            R.layout.recycler_row)
+            //Add RecyclerSectionItemDecoration.SectionCallback
+            recyclerView.addItemDecoration(getSectionCallback(history))
+
+            //Set Adapter
+            recyclerView.adapter = HistoryPointAdapter(layoutInflater,
+                history,
+                R.layout.recycler_row)
+        } else {
+            historyTitle.visibility = View.GONE
+            emptyHistory.visibility = View.VISIBLE
+            emptyHistory.text = "Hier ist es ziemlich leer. \n \n Sammle Punkte indem du auf den Score Some Points auf der Startseite drückst"
+        }
+
+
     }
 
 

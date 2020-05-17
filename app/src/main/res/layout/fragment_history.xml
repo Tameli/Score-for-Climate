@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
         <TextView
+            android:id="@+id/historyTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Was du bisher erreicht hast"
@@ -17,9 +18,27 @@
             android:layout_marginBottom="20dp"
             android:textSize="30sp"/>
 
+        <TextView
+            android:id="@+id/emptyHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="25sp"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="10dp" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                 <xyz.sangcomz.stickytimelineview.TimeLineRecyclerView
                     android:id="@+id/recycler_view"
@@ -27,7 +46,9 @@
                     android:layout_height="wrap_content"
                     app:sectionTitleTextColor="@color/colorPrimaryDark"
                     app:timeLineCircleColor="@color/colorPrimary"
-                    app:timeLineColor="@color/colorPrimary"/>
+                    app:timeLineColor="@color/colorPrimary" />
+
+                </LinearLayout>
 
         </ScrollView>
 

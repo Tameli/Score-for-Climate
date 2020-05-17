@@ -6,20 +6,21 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.preference.CheckBoxPreference
 import com.example.scoreforclimate.roomDB.History
 import com.example.scoreforclimate.roomDB.Score
 import com.example.scoreforclimate.roomDB.ScoreDatabase
 import com.google.android.material.checkbox.MaterialCheckBox
 import kotlinx.android.synthetic.main.fragment_scorepoints.*
-import java.lang.NullPointerException
 import java.sql.Date
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -203,7 +204,9 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         }catch(e: NullPointerException){
             scoresDb.scoreDao().insertScore(score)
         }
-
+        Toast.makeText(activity, "Cool! Du hast soeben $newScore Punkte gesammelt.",
+            Toast.LENGTH_LONG
+        ).show()
         saveHistory(listActions)
         parentFragmentManager.popBackStack()
     }

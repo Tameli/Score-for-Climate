@@ -1,7 +1,9 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.preferences
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
+import com.example.scoreforclimate.R
+import com.example.scoreforclimate.roomDB.ScoreDatabase
 
 class ScorePreferenceFragment : PreferenceFragmentCompat() {
 
@@ -9,6 +11,10 @@ class ScorePreferenceFragment : PreferenceFragmentCompat() {
         fun newInstance(): ScorePreferenceFragment {
             return ScorePreferenceFragment()
         }
+    }
+
+    private val scoresDb by lazy {
+        ScoreDatabase.getScoreDatabase(requireContext().applicationContext)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

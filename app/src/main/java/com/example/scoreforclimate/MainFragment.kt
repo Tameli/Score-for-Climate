@@ -130,49 +130,54 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun calculateScore() {
         var preconfigScore = 0
-        var preferencesValue : Map<kotlin.String, *> = preconfigPreferencesViewModel.setScorePrefValue()
-        if(preferencesValue.get("checkBoxPreferenceVegetarian") != null && preferencesValue.get("checkBoxPreferenceVegetarian") as Boolean){
+        val preferencesValue = preconfigPreferencesViewModel.setScorePrefValue()
+        if(preferencesValue["checkBoxPreferenceVegetarian"] != null && preferencesValue["checkBoxPreferenceVegetarian"] as Boolean){
             preconfigScore += 10
         }
-        if(preferencesValue.get("checkBoxPreferenceVegan") != null && preferencesValue.get("checkBoxPreferenceVegan") as Boolean){
+        if(preferencesValue["checkBoxPreferenceVegan"] != null && preferencesValue["checkBoxPreferenceVegan"] as Boolean){
             preconfigScore += 15
         }
-        if(preferencesValue.get("checkBoxPreferencePet") != null && preferencesValue.get("checkBoxPreferencePet") as Boolean){
+        if(preferencesValue["checkBoxPreferencePet"] != null && preferencesValue["checkBoxPreferencePet"] as Boolean){
             preconfigScore += 2
         }
-        if(preferencesValue.get("checkBoxPreferenceAlu") != null && preferencesValue.get("checkBoxPreferenceAlu") as Boolean){
+        if(preferencesValue["checkBoxPreferenceAlu"] != null && preferencesValue["checkBoxPreferenceAlu"] as Boolean){
             preconfigScore += 2
         }
-        if(preferencesValue.get("checkBoxPreferenceCardboard") != null && preferencesValue.get("checkBoxPreferenceCardboard") as Boolean){
+        if(preferencesValue["checkBoxPreferenceCardboard"] != null && preferencesValue["checkBoxPreferenceCardboard"] as Boolean){
             preconfigScore += 2
         }
-        if(preferencesValue.get("checkBoxPreferenceNothing") != null && preferencesValue.get("checkBoxPreferenceNothing") as Boolean){
+        if(preferencesValue["checkBoxPreferenceNothing"] != null && preferencesValue["checkBoxPreferenceNothing"] as Boolean){
             Toast.makeText(activity, "Hallo du recycelst also noch nichts? Cool, dass du dir diese App geholt hast! Frohes Punkte Sammeln! :)",LENGTH_LONG).show()
         }
-        if(preferencesValue.get("listPreference") != null && preferencesValue.get("listPreference") == 1){
+        if(preferencesValue["listPreference"] != null && preferencesValue["listPreference"] == 1){
             preconfigScore += 5
         }
-        System.out.println(preconfigScore)
-        System.out.println(preferencesValue)
+        println(preconfigScore)
+        println(preferencesValue)
         savePointsToDatabase(preconfigScore)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun savePointsToDatabase(score: Int){
         var newScorePreConfig = score
-        var timestampNow: LocalDate = LocalDate.now()
-        val df = DateFormat.getDateInstance()
+        val timestampNow: LocalDate = LocalDate.now()
+        var latestDate: Date?
+        try {
+            latestDate = scoresDb.historyDao().getLatestHistory().modificationDate
+        } catch (n: java.lang.NullPointerException) {
+            latestDate = Date()
+            Log.i("noPreconfig", "There is no preconfig, first Start")
+        }
 
-        var latestDate: Date? = scoresDb.historyDao().getLatestHistory().modificationDate
-        var latestDateLocalDate: LocalDate? = latestDate?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate();
-        var difference: Long = ChronoUnit.DAYS.between(timestampNow,latestDateLocalDate)
+        val latestDateLocalDate: LocalDate? = latestDate?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()
+        val difference: Long = ChronoUnit.DAYS.between(timestampNow,latestDateLocalDate)
         //var difference : Long = 2
         if(difference == 0L){
             Log.i("preConfig","Seit dem letzten Login ist noch kein Tag vergangen. Es werden keine neuen Punkte der preconfig in die DB geschrieben")
         }
         else{
             newScorePreConfig *= difference.toInt()
-            var newScore = Score()
+            val newScore = Score()
             newScore.value = newScorePreConfig
             try{
                 if (scoresDb.scoreDao().getScoreById(1).value != null) {

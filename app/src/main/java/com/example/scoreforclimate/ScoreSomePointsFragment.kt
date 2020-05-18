@@ -204,9 +204,10 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         }catch(e: NullPointerException){
             scoresDb.scoreDao().insertScore(score)
         }
-        Toast.makeText(activity, "Cool! Du hast soeben $newScore Punkte gesammelt.",
-            Toast.LENGTH_LONG
-        ).show()
+        if(newScore!=0) {
+            Toast.makeText(activity, "Cool! Du hast soeben $newScore Punkte gesammelt.",
+            Toast.LENGTH_LONG).show()
+        }
         saveHistory(listActions)
         parentFragmentManager.popBackStack()
     }

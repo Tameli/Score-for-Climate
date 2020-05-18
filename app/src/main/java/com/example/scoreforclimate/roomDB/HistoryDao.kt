@@ -18,5 +18,8 @@ interface HistoryDao {
     fun getHistoryById(id: Long): History
 
     @Query("SELECT * FROM history WHERE historyId=(SELECT MAX(historyId) from history)")
+    fun getLatestId(): History
+
+    @Query("SELECT * FROM history WHERE historyId=(SELECT MAX(historyId) from history)")
     fun getLatestHistory(): History
 }

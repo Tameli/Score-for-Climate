@@ -170,12 +170,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         val latestDateLocalDate: LocalDate? = latestDate?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()
-        val difference: Long = ChronoUnit.DAYS.between(timestampNow,latestDateLocalDate)
-        //var difference : Long = 2
+        val difference: Long = ChronoUnit.DAYS.between(latestDateLocalDate,timestampNow)
         if(difference == 0L){
             Log.i("preConfig","Seit dem letzten Login ist noch kein Tag vergangen. Es werden keine neuen Punkte der preconfig in die DB geschrieben")
         }
         else{
+            System.out.println(difference)
             newScorePreConfig *= difference.toInt()
             val newScore = Score()
             newScore.value = newScorePreConfig
@@ -183,6 +183,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 if (scoresDb.scoreDao().getScoreById(1).value != null) {
                     newScore.value = newScore.value!! + scoresDb.scoreDao().getScoreById(1).value!!
                     scoresDb.scoreDao().updateScore(1, newScore.value)
+                    savePrecofigHistory(difference, newScorePreConfig)
                 }
             }catch(e: NullPointerException){
                 scoresDb.scoreDao().insertScore(newScore)
@@ -190,6 +191,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             Toast.makeText(activity, "Cool! Du erhältst für deine gesetzen Preconfig $newScorePreConfig neue Punkte :)",LENGTH_LONG).show()
         }
 
+    }
+
+    fun savePrecofigHistory(difference: Long, newScore : Int ){
+        val listActions: MutableList<String?> = ArrayList<String?>()
+        listActions.add("In den letzten $difference Tagen hast du mit preconfig $newScore Punkte erzielt")
+        var historyId = scoresDb.historyDao().getLatestId().historyId
+        historyId++
+        val date = java.sql.Date(System.currentTimeMillis())
+        val history = History(historyId,1, date, listActions)
+        scoresDb.historyDao().insertHistory(history)
     }
 
 }

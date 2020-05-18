@@ -15,22 +15,9 @@ class PreconfigViewModel (application: Application): AndroidViewModel(applicatio
     private val VEGETARIAN ="checkBoxPreferenceVegetarian"
     private val VEGAN ="checkBoxPreferenceVegan"
 
-    private var preferencesSummary: MutableLiveData<Boolean> = MutableLiveData()
-
-    fun getPreferencesSummary(): MutableLiveData<Boolean> {
-        return preferencesSummary
-    }
-
     fun setScorePrefValue() : Map<String,*> {
         val preconfigPref =
             androidx.preference.PreferenceManager.getDefaultSharedPreferences(getApplication()).all
-        val recyleALU = preconfigPref[RECYCLE_ALU]
-        val recylePET = preconfigPref[RECYCLE_PET]
-        val recyleCarton = preconfigPref[RECYCLE_CARTON]
-        val recyleNothing = preconfigPref[RECYCLE_NOTHING]
-        val compost = preconfigPref[COMPOST]
-        val vegetarian = preconfigPref[VEGETARIAN]
-        val vegan = preconfigPref[VEGAN]
         return preconfigPref
     }
 }

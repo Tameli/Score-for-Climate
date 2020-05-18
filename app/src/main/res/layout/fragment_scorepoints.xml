@@ -2,7 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:id="@+id/scorePoints">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scorePoints"
+    android:background="@drawable/mobpro10_v2">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,16 +53,16 @@
                 android:textSize="24sp"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
-                android:id = "@+id/firstButtonValue5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/firstButtonValue5"/>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id = "@+id/secondButtonValue5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/secondButtonValue5"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id = "@+id/firstButtonValue5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/firstButtonValue5"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -68,30 +70,6 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/tenpoints"
                 android:textSize="24sp"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/cleanupsubtitle"
-                android:textSize="15sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/showCities"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/selectcitybuttontext"
-                android:layout_weight="1"/>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutFragmentScorepoints"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </LinearLayout>
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/firstButtonValue10"
@@ -104,6 +82,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/secondButtonValue10"/>
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:text="@string/cleanupsubtitle"-->
+<!--                android:textSize="15sp" />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showCities"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="left"
+                android:text="@string/selectcitybuttontext"
+                android:textColor="@color/primaryDarkColor"
+                app:strokeColor="@color/primaryDarkColor"
+                app:strokeWidth="2dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutFragmentScorepoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"

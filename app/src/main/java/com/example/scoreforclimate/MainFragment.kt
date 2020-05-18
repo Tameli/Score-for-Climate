@@ -53,11 +53,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         buttonScorePoints.setOnClickListener { scoreSomePoints() }
         buttonSetPreconfig.setOnClickListener { openPreferences() }
-        setScoreOnDisplay()
         buttonShowHistory.setOnClickListener { getHistoryFragment() }
         preconfigPreferencesViewModel.setScorePrefValue()
         calculateScore()
-
+        setScoreOnDisplay()
     }
 
     override fun onDestroy() {
@@ -152,8 +151,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if(preferencesValue["listPreference"] != null && preferencesValue["listPreference"] == 1){
             preconfigScore += 5
         }
-        println(preconfigScore)
-        println(preferencesValue)
+
         savePointsToDatabase(preconfigScore)
     }
 

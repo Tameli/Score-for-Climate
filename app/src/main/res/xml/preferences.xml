@@ -18,10 +18,6 @@
             android:key="checkBoxPreferenceCardboard"
             android:title="Karton"/>
 
-        <CheckBoxPreference
-            android:key="checkBoxPreferenceNothing"
-            android:title="Nichts"/>
-
     </PreferenceCategory>
 
     <PreferenceCategory

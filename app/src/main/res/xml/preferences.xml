@@ -8,15 +8,18 @@
 
         <CheckBoxPreference
             android:key="checkBoxPreferencePet"
-            android:title="PET"/>
+            android:title="PET"
+            android:defaultValue="false"/>
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceAlu"
-            android:title="Alu"/>
+            android:title="Alu"
+            android:defaultValue="false"/>
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceCardboard"
-            android:title="Karton"/>
+            android:title="Karton"
+            android:defaultValue="false"/>
 
     </PreferenceCategory>
 

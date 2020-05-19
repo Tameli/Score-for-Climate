@@ -130,26 +130,30 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     fun calculateScore() {
         var preconfigScore = 0
         val preferencesValue = preconfigPreferencesViewModel.setScorePrefValue()
-        if(preferencesValue["checkBoxPreferenceVegetarian"] != null && preferencesValue["checkBoxPreferenceVegetarian"] as Boolean){
+        System.out.println(preferencesValue)
+        if(preferencesValue["checkBoxPreferenceVegetarian"] == true  && preferencesValue["checkBoxPreferenceVegan"] == false){
             preconfigScore += 10
         }
-        if(preferencesValue["checkBoxPreferenceVegan"] != null && preferencesValue["checkBoxPreferenceVegan"] as Boolean){
+        if(preferencesValue["checkBoxPreferenceVegan"] == true && preferencesValue["checkBoxPreferenceVegetarian"] == false){
             preconfigScore += 15
         }
-        if(preferencesValue["checkBoxPreferencePet"] != null && preferencesValue["checkBoxPreferencePet"] as Boolean){
+        if(preferencesValue["checkBoxPreferencePet"] == true){
             preconfigScore += 2
         }
-        if(preferencesValue["checkBoxPreferenceAlu"] != null && preferencesValue["checkBoxPreferenceAlu"] as Boolean){
+        if(preferencesValue["checkBoxPreferenceAlu"] == true){
             preconfigScore += 2
         }
-        if(preferencesValue["checkBoxPreferenceCardboard"] != null && preferencesValue["checkBoxPreferenceCardboard"] as Boolean){
+        if(preferencesValue["checkBoxPreferenceCardboard"] == true){
             preconfigScore += 2
         }
-        if(preferencesValue["checkBoxPreferenceNothing"] != null && preferencesValue["checkBoxPreferenceNothing"] as Boolean){
+        if(preferencesValue["checkBoxPreferenceCardboard"] == false  && preferencesValue["checkBoxPreferenceAlu"] == false && preferencesValue["checkBoxPreferencePet"]== false){
             Toast.makeText(activity, "Hallo du recycelst also noch nichts? Cool, dass du dir diese App geholt hast! Frohes Punkte Sammeln! :)",LENGTH_LONG).show()
         }
-        if(preferencesValue["listPreference"] != null && preferencesValue["listPreference"] == 1){
+        if( preferencesValue["listPreference"] == 1){
             preconfigScore += 5
+        }
+        if(preferencesValue["checkBoxPreferenceVegan"]== true && preferencesValue["checkBoxPreferenceVegetarian"]== true){
+            Toast.makeText(activity, "Du kannst nicht Vegetarier und Veganer sein. Bitte entscheide dich ;)",LENGTH_LONG).show()
         }
 
         savePointsToDatabase(preconfigScore)

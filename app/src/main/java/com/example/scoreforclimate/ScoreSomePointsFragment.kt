@@ -91,22 +91,26 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
                 coordinatorLayout.removeView(allCheckboxes[i])
             }
             allCheckboxes.clear()
+
+            var counter = 0
             for (i in cleanUpInfo.indices) {
 
-                val checkParams: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.WRAP_CONTENT,
-                    CoordinatorLayout.LayoutParams.WRAP_CONTENT
-                )
-                checkParams.setMargins(0, 25, 0, 0)
-                val checkBox = MaterialCheckBox(context)
-                checkBox.id = i
                 val formatter = DateTimeFormatter.ofPattern("dd-MM-yyy")
                 val date = LocalDate.parse(cleanUpInfo[i].date, formatter)
                 if (date > LocalDate.now()) {
+                    val checkParams: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.WRAP_CONTENT,
+                        CoordinatorLayout.LayoutParams.WRAP_CONTENT
+                    )
+                checkParams.setMargins(0, 25, 0, 0)
+                val checkBox = MaterialCheckBox(context)
+                checkBox.id = counter
+
                     checkBox.text =
-                        cleanUpInfo[i].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[i].time + "\n Treffpunkt: " + cleanUpInfo[i].meetingpoint
+                        cleanUpInfo[counter].title + "\n Datum: " + date + "\n Zeit: " + cleanUpInfo[counter].time + "\n Treffpunkt: " + cleanUpInfo[counter].meetingpoint
                     allCheckboxes.add(checkBox)
                     coordinatorLayout.addView(checkBox, checkParams)
+                    counter++
                 }
             }
 

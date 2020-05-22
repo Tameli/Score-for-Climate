@@ -217,11 +217,13 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
     }
 
     private fun saveHistory(listActions: MutableList<String?>){
-        val date = Date(System.currentTimeMillis())
-        val history = History(historyId,1, date, listActions)
-        scoresDb.historyDao().insertHistory(history )
-        historyId++
-        parentFragmentManager.popBackStack()
+        if (listActions.isNotEmpty()) {
+            val date = Date(System.currentTimeMillis())
+            val history = History(historyId, 1, date, listActions)
+            scoresDb.historyDao().insertHistory(history)
+            historyId++
+            parentFragmentManager.popBackStack()
+        }
     }
 
 }

@@ -45,7 +45,7 @@ class HistoryFragment: Fragment(R.layout.fragment_history) {
         } else {
             historyTitle.visibility = View.GONE
             emptyHistory.visibility = View.VISIBLE
-            emptyHistory.text = "Hier ist es ziemlich leer. \n \n Sammle Punkte,\nindem du auf den\nSAMMLE PUNKTE\n Knopf auf der\n Startseite drückst \n \n \n \nViel Spass\nbeim Sammeln"
+            emptyHistory.text = "Hier ist es ziemlich leer. \n \n Sammle Punkte,\nindem du auf den\n\"SAMMLE PUNKTE\" \n Knopf auf der\n Startseite drückst \n \n \n \nViel Spass\nbeim Sammeln"
         }
 
 

@@ -13,10 +13,6 @@ class ScorePreferenceFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private val scoresDb by lazy {
-        ScoreDatabase.getScoreDatabase(requireContext().applicationContext)
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
     }

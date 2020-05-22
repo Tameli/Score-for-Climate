@@ -1,9 +1,5 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.rest
 
-
-import java.time.format.DateTimeFormatter;
-
-import java.util.*
 
 data class CleanUpInfo (
     val title: String,

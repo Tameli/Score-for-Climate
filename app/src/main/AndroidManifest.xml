@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="CurrentPointService"
+        <service android:name=".foregroundservice.CurrentPointService"
             android:exported="false"/>
     </application>
 

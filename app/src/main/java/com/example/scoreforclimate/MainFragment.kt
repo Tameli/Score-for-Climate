@@ -1,5 +1,6 @@
 package com.example.scoreforclimate
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,6 +12,8 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.scoreforclimate.foregroundservice.CurrentPointService
+import com.example.scoreforclimate.foregroundservice.CurrentPointsConnection
 import com.example.scoreforclimate.preferences.PreconfigViewModel
 import com.example.scoreforclimate.preferences.ScorePreferenceFragment
 import com.example.scoreforclimate.roomDB.History
@@ -64,7 +67,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun bindService() {
         val demoService = Intent(context, CurrentPointService::class.java)
-        currentPointsConnection = CurrentPointsConnection()
+        currentPointsConnection =
+            CurrentPointsConnection()
         currentPointsConnection?.let { it ->
             requireActivity().bindService(demoService, it, Context.BIND_AUTO_CREATE)
         }
@@ -83,12 +87,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             .addToBackStack("ScoreSomePoints").commit()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setScoreOnDisplay() {
         val points = getScoreFromDB()
         if (points != 0) {
             textViewCurrentScore.text = "Dein Punktestand ist " + points
         } else {
-            textViewCurrentScore.text = "Du hast 0 Punkte"
+            textViewCurrentScore.text = getString(R.string.nullPointsString)
         }
     }
 
@@ -131,7 +136,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     fun calculateScore() {
         var preconfigScore = 0
         val preferencesValue = preconfigPreferencesViewModel.setScorePrefValue()
-        System.out.println(preferencesValue)
         if(preferencesValue["checkBoxPreferenceVegetarian"] == true  && preferencesValue["checkBoxPreferenceVegan"] == false){
             preconfigScore += 10
         }
@@ -179,7 +183,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             Log.i("preConfig","Seit dem letzten Login ist noch kein Tag vergangen. Es werden keine neuen Punkte der preconfig in die DB geschrieben")
         }
         else{
-            System.out.println(difference)
             newScorePreConfig *= difference.toInt()
             val newScore = Score()
             newScore.value = newScorePreConfig
@@ -197,7 +200,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     }
 
-    fun savePrecofigHistory(difference: Long, newScore : Int ){
+    private fun savePrecofigHistory(difference: Long, newScore : Int ){
         val listActions: MutableList<String?> = ArrayList<String?>()
         listActions.add("In den letzten $difference Tagen hast du mit preconfig $newScore Punkte erzielt")
         var historyId = scoresDb.historyDao().getLatestId().historyId

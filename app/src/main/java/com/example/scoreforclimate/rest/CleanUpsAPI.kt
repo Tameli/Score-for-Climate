@@ -1,10 +1,11 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.rest
 
 
+import com.example.scoreforclimate.rest.CleanUpInfo
+import com.example.scoreforclimate.rest.CleanUps
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface CleanUpsAPI {
     @GET("cities.json")

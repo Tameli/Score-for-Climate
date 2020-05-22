@@ -1,4 +1,4 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.rest
 
 data class CleanUps (
     val name: String,

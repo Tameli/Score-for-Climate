@@ -1,8 +1,9 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.foregroundservice
 
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
+import com.example.scoreforclimate.foregroundservice.CurrentPointsApi
 
 class CurrentPointsConnection: ServiceConnection {
     private var currentPointsApi : CurrentPointsApi? = null

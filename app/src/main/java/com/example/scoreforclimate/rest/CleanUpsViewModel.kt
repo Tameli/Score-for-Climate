@@ -1,4 +1,4 @@
-package com.example.scoreforclimate
+package com.example.scoreforclimate.rest
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +20,8 @@ class CleanUpsViewModel : ViewModel() {
         .addConverterFactory(MoshiConverterFactory.create())
         .baseUrl("http://mobpro.kev-ae.ch/")
         .build()
-    val cleanUpServices: CleanUpsAPI = retrofit.create(CleanUpsAPI:: class.java)
+    private val cleanUpServices: CleanUpsAPI = retrofit.create(
+        CleanUpsAPI:: class.java)
 
     fun requestAllCleanUps() {
         val call = cleanUpServices.getAllCleanUps()
@@ -28,19 +29,16 @@ class CleanUpsViewModel : ViewModel() {
 
             override fun onResponse(call: Call<List<CleanUps>>, response: Response<List<CleanUps>>) {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
-                    System.out.println("Reponse Code ist: "+ response.code())
                     cities.value = response.body()
                 }
             }
             override fun onFailure(call: Call<List<CleanUps>>, t: Throwable){
                 Log.e("Fehler","siehe ", t)
-                System.out.println("Fehler ServerRequest")
             }
         })
     }
 
     fun requestCleanUpInfo(code:String){
-        System.out.println(code)
         val call = cleanUpServices.getCleanUpInfo(code)
         call.enqueue(object : Callback<List<CleanUpInfo>> {
 
@@ -51,7 +49,6 @@ class CleanUpsViewModel : ViewModel() {
             }
             override fun onFailure(call: Call<List<CleanUpInfo>>, t: Throwable){
                 Log.e("Fehler","siehe ", t)
-                System.out.println("Fehler ServerRequest")
             }
         })
     }

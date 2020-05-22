@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="110dp"
             android:text="@string/textViewCurrentScore"
@@ -64,7 +65,7 @@
                 android:text="@string/buttonSetPreconfig"
                 app:strokeColor="@color/primaryColor"
                 app:strokeWidth="1dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Dialog" />
 
             </LinearLayout>

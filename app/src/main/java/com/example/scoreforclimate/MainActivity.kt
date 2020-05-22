@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.scoreforclimate.foregroundservice.CurrentPointService
 
 class MainActivity : AppCompatActivity() {
 

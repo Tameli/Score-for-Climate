@@ -1,5 +1,6 @@
 package com.example.scoreforclimate
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Build
@@ -12,10 +13,9 @@ import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.preference.CheckBoxPreference
+import com.example.scoreforclimate.rest.CleanUpsViewModel
 import com.example.scoreforclimate.roomDB.History
 import com.example.scoreforclimate.roomDB.Score
 import com.example.scoreforclimate.roomDB.ScoreDatabase
@@ -80,6 +80,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         return builder.create()
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpViewModelObserver(): ArrayList<CheckBox> {
         val coordinatorLayout =
@@ -127,25 +128,23 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
         val checkBox5: List<CheckBox?> = listOf<CheckBox?>(firstButtonValue5, secondButtonValue5)
         val checkBox10: List<CheckBox?> = listOf<CheckBox?>(firstButtonValue10, secondButtonValue10)
         val checkBox50: List<CheckBox?> = listOf<CheckBox?>(firstButtonValue50)
-        val listActions: MutableList<String?> = ArrayList<String?>()
-        var range: Int = linearLayoutFragmentScorepoints.size
+        val listActions: MutableList<String?> = ArrayList()
+        val range: Int = linearLayoutFragmentScorepoints.size
 
         //10 points section
 
         for (i: Int in 0 until range) {
-            var onlyTitleCleanUp:String? = null
+            var onlyTitleCleanUp: String?
             val checkBox: CheckBox? = view?.findViewById(i)
             if(checkBox?.isChecked!!){
                 newScore +=10
-                var splittedText: List<String?> = checkBox.text.toString().split(":")
-                var splittedTextPart0: List<String?> = checkBox.text.toString().split("\n")
+                val splittedTextPart0: List<String?> = checkBox.text.toString().split("\n")
                 onlyTitleCleanUp = splittedTextPart0[0]
-                System.out.println(onlyTitleCleanUp)
                 listActions.add(onlyTitleCleanUp)
             }
         }
 
-        for (i: Int in 0 until checkBox10.size) {
+        for (i: Int in checkBox10.indices) {
             if (checkBox10[i]?.isChecked!!) {
                 newScore += 10
                 if (checkBox10[i] == firstButtonValue10) {
@@ -159,7 +158,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
         //2 points section
 
-        for (i: Int in 0 until checkBox2.size) {
+        for (i: Int in checkBox2.indices) {
             if (checkBox2[i]?.isChecked!!) {
                 newScore += 2
                 if (checkBox2[i] == firstButtonValue2) {
@@ -173,7 +172,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
         //5 points section
 
-        for (i: Int in 0 until checkBox5.size) {
+        for (i: Int in checkBox5.indices) {
             if (checkBox5[i]?.isChecked!!) {
                 newScore += 5
                 if (checkBox5[i] == firstButtonValue5) {
@@ -187,7 +186,7 @@ class ScoreSomePointsFragment : Fragment(R.layout.fragment_scorepoints) {
 
         //50 points section
 
-        for (i: Int in 0 until checkBox50.size) {
+        for (i: Int in checkBox50.indices) {
             if (checkBox50[i]?.isChecked!!) {
                 newScore += 50
                 if (checkBox50[i] == firstButtonValue50) {

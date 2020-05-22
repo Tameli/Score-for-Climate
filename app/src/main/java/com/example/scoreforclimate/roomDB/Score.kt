@@ -1,6 +1,5 @@
 package com.example.scoreforclimate.roomDB
 
-import java.sql.Timestamp
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -6,26 +6,22 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.CheckBox
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.scoreforclimate.preferences.ScorePreferenceFragment
 import com.example.scoreforclimate.preferences.PreconfigViewModel
+import com.example.scoreforclimate.preferences.ScorePreferenceFragment
 import com.example.scoreforclimate.roomDB.History
 import com.example.scoreforclimate.roomDB.HistoryFragment
 import com.example.scoreforclimate.roomDB.Score
 import com.example.scoreforclimate.roomDB.ScoreDatabase
 import kotlinx.android.synthetic.main.fragment_main.*
-import java.text.DateFormat
 import java.time.LocalDate
 import java.time.ZoneId
-import java.util.*
 import java.time.temporal.ChronoUnit
-import java.util.concurrent.TimeUnit
-import javax.xml.datatype.DatatypeConstants.DAYS
+import java.util.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -88,7 +84,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setScoreOnDisplay() {
-        textViewCurrentScore.text = "Your current score is ${getScoreFromDB()}"
+        val points = getScoreFromDB()
+        if (points != 0) {
+            textViewCurrentScore.text = "Dein Punktestand ist " + points
+        } else {
+            textViewCurrentScore.text = "Du hast 0 Punkte"
+        }
     }
 
     private fun openPreferences() {
@@ -147,7 +148,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             preconfigScore += 2
         }
         if(preferencesValue["checkBoxPreferenceCardboard"] == false  && preferencesValue["checkBoxPreferenceAlu"] == false && preferencesValue["checkBoxPreferencePet"]== false){
-            Toast.makeText(activity, "Hallo du recycelst also noch nichts? Cool, dass du dir diese App geholt hast! Frohes Punkte Sammeln! :)",LENGTH_LONG).show()
+            Toast.makeText(activity, "Hallo du recycelst also noch nichts? Fang jetzt damit an und sammle Punkte :)",
+                LENGTH_LONG).show()
         }
         if( preferencesValue["listPreference"] == 1){
             preconfigScore += 5

@@ -23,7 +23,7 @@ class CurrentPointService : Service() {
     override fun onCreate() {
         super.onCreate()
         notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        startForeground(NOTIFICATION_ID, createNotification("---waiting for score---"))
+        startForeground(NOTIFICATION_ID, createNotification("---warte auf Punktestand---"))
     }
 
     override fun onDestroy() {
@@ -36,15 +36,12 @@ class CurrentPointService : Service() {
     }
 
     fun showPoints(currentScore: Int?) {
-        var currentPoints : Int?
-        currentPoints = scoresDb.scoreDao().getScoreById(1).value
-        if (currentScore != null) {
-            currentPoints = currentScore
-        }
+
         if (currentScore == -1) {
             notificationManager?.notify(NOTIFICATION_ID, createNotification("Punktestand konnte nicht geladen werden"))
+        } else if (currentScore != null) {
+            notificationManager?.notify(NOTIFICATION_ID, createNotification("Aktueller Punktestand: $currentScore"))
         }
-        notificationManager?.notify(NOTIFICATION_ID, createNotification("Aktueller Punktestand: $currentPoints"))
 
     }
 

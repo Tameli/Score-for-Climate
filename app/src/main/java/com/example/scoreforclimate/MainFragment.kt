@@ -136,7 +136,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     fun calculateScore() {
         var preconfigScore = 0
         val preferencesValue = preconfigPreferencesViewModel.setScorePrefValue()
-        if(preferencesValue["checkBoxPreferenceVegetarian"] == true  && preferencesValue["checkBoxPreferenceVegan"] == false){
+        if(preferencesValue["checkBoxPreferenceVegetarian"] == true && preferencesValue["checkBoxPreferenceVegan"] == false){
             preconfigScore += 10
         }
         if(preferencesValue["checkBoxPreferenceVegan"] == true && preferencesValue["checkBoxPreferenceVegetarian"] == false){

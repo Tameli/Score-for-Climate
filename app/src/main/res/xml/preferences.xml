@@ -45,11 +45,13 @@
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceVegetarian"
-            android:title="Vegetarisch"/>
+            android:title="Vegetarisch"
+            android:defaultValue="false"/>
 
         <CheckBoxPreference
             android:key="checkBoxPreferenceVegan"
-            android:title="Vegan"/>
+            android:title="Vegan"
+            android:defaultValue="false"/>
 
     </PreferenceCategory>
 </PreferenceScreen>
